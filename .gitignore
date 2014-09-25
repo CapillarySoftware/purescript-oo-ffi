@@ -1,0 +1,4 @@
+bower_components/
+extern.purs
+node_modules/
+tmp/
