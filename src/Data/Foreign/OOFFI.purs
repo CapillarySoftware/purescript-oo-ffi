@@ -1,9 +1,10 @@
-module Data.Foreign.OOFFI 
+module Data.Foreign.OOFFI
   ( method0, method0Eff
   , method1, method1Eff
   , method2, method2Eff
   , method3, method3Eff
   , method4, method4Eff
+  , method5, method5Eff
   , getter, modifier, setter) where
 
 import Data.Function
@@ -14,7 +15,7 @@ import Control.Monad.Eff
 foreign import method0Impl
   "function method0Impl(fnName, o){\
   \  return o[fnName]();\
-  \}" :: forall o e. Fn2 String o e
+  \}" :: forall o ret. Fn2 String o ret
 
 method0 = runFn2 method0Impl
 
@@ -23,7 +24,7 @@ foreign import method0EffImpl
   \  return function(){\
   \    return o[fnName]();\
   \  };\
-  \}" :: forall o e. Fn2 String o e
+  \}" :: forall o a eff. Fn2 String o (Eff eff a)
 
 method0Eff = runFn2 method0EffImpl
 
@@ -32,7 +33,7 @@ method0Eff = runFn2 method0EffImpl
 foreign import method1Impl
   "function method1Impl(fnName, o, a){\
   \  return o[fnName](a);\
-  \}" :: forall o a e. Fn3 String o a e
+  \}" :: forall o a ret. Fn3 String o a ret
 
 method1 = runFn3 method1Impl
 
@@ -41,7 +42,7 @@ foreign import method1EffImpl
   \  return function(){\
   \    return o[fnName](a);\
   \  };\
-  \}" :: forall o a e. Fn3 String o a e
+  \}" :: forall o a b eff. Fn3 String o a (Eff eff b)
 
 method1Eff = runFn3 method1EffImpl
 
@@ -50,7 +51,7 @@ method1Eff = runFn3 method1EffImpl
 foreign import method2Impl
   "function method2Impl(fnName, o, a, b){\
   \  return o[fnName](a, b);\
-  \}" :: forall o a b e. Fn4 String o a b e
+  \}" :: forall o a b ret. Fn4 String o a b ret
 
 method2 = runFn4 method2Impl
 
@@ -59,7 +60,7 @@ foreign import method2EffImpl
   \  return function(){\
   \    return o[fnName](a, b);\
   \  };\
-  \}" :: forall o a b e. Fn4 String o a b e
+  \}" :: forall o a b c eff. Fn4 String o a b (Eff eff c)
 
 method2Eff = runFn4 method2EffImpl
 
@@ -68,7 +69,7 @@ method2Eff = runFn4 method2EffImpl
 foreign import method3Impl
   "function method3Impl(fnName, o, a, b, c){\
   \  return o[fnName](a, b, c);\
-  \}" :: forall o a b c e. Fn5 String o a b c e
+  \}" :: forall o a b c ret. Fn5 String o a b c ret
 
 method3 = runFn5 method3Impl
 
@@ -77,7 +78,7 @@ foreign import method3EffImpl
   \  return function(){\
   \    return o[fnName](a, b, c);\
   \  };\
-  \}" :: forall o a b c e. Fn5 String o a b c e
+  \}" :: forall o a b c d eff. Fn5 String o a b c (Eff eff d)
 
 method3Eff = runFn5 method3EffImpl
 
@@ -86,7 +87,7 @@ method3Eff = runFn5 method3EffImpl
 foreign import method4Impl
   "function method4Impl(fnName, o, a, b, c, e){\
   \  return o[fnName](a, b, c, e);\
-  \}" :: forall o a b c e' e. Fn6 String o a b c e' e
+  \}" :: forall o a b c e ret. Fn6 String o a b c e ret
 
 method4 = runFn6 method4Impl
 
@@ -95,9 +96,27 @@ foreign import method4EffImpl
   \  return function(){\
   \    return o[fnName](a, b, c, e);\
   \  };\
-  \}" :: forall o a b c e' e. Fn6 String o a b c e' e
+  \}" :: forall o a b c e f eff. Fn6 String o a b c e (Eff eff f)
 
 method4Eff = runFn6 method4EffImpl
+
+
+
+foreign import method5Impl
+  "function method5Impl(fnName, o, a, b, c, e, f){\
+  \  return o[fnName](a, b, c, e, f);\
+  \}" :: forall o a b c e f ret. Fn7 String o a b c e f ret
+
+method5 = runFn7 method5Impl
+
+foreign import method5EffImpl
+  "function method5EffImpl(fnName, o, a, b, c, e, f){\
+  \  return function(){\
+  \    return o[fnName](a, b, c, e, f);\
+  \  };\
+  \}" :: forall o a b c e f g eff. Fn7 String o a b c e f (Eff eff g)
+
+method5Eff = runFn7 method5EffImpl
 
 
 
