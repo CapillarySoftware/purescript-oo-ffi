@@ -5,7 +5,13 @@ module Data.Foreign.OOFFI
   , method3, method3Eff
   , method4, method4Eff
   , method5, method5Eff
-  , getter, modifier, setter) where
+  , getter, modifier, setter
+  , instantiate0
+  , instantiate1
+  , instantiate2
+  , instantiate3
+  , instantiate4
+  , instantiate5 ) where
 
 import Data.Function
 import Control.Monad.Eff
@@ -152,3 +158,58 @@ foreign import setterImpl
   \}" :: forall o v e. Fn3 String o v e
 
 setter = runFn3 setterImpl
+
+
+
+
+foreign import instantiate0 """
+  function instantiate0(string){
+    return function(){
+      return new window[string]();
+    };
+  }""" :: forall a e. String -> Eff e a
+
+foreign import instantiate1Impl """
+  function instantiate1Impl(string, x){
+    return function(){
+      return new window[string](x);
+    };
+  }""" :: forall a b e. Fn2 String a (Eff e b)
+
+instantiate1 = runFn2 instantiate1Impl
+
+foreign import instantiate2Impl """
+  function instantiate2Impl(string, x, y){
+    return function(){
+      return new window[string](x, y);
+    };
+  }""" :: forall a b c e. Fn3 String a b (Eff e c)
+
+instantiate2 = runFn3 instantiate2Impl
+
+foreign import instantiate3Impl """
+  function instantiate3Impl(string, x, y, z){
+    return function(){
+      return new window[string](x, y, z);
+    };
+  }""" :: forall a b c d e. Fn4 String a b c (Eff e d)
+
+instantiate3 = runFn4 instantiate3Impl
+
+foreign import instantiate4Impl """
+  function instantiate4Impl(string, w, x, y, z){
+    return function(){
+      return new window[string](w, x, y, z);
+    };
+  }""" :: forall a b c d e f. Fn5 String a b c d (Eff e f)
+
+instantiate4 = runFn5 instantiate4Impl
+
+foreign import instantiate5Impl """
+  function instantiate5Impl(string, v, w, x, y, z){
+    return function(){
+      return new window[string](v, w, x, y, z);
+    };
+  }""" :: forall a b c d e f g. Fn6 String a b c d f (Eff e g)
+
+instantiate5 = runFn6 instantiate5Impl

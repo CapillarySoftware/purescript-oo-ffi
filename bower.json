@@ -15,6 +15,7 @@
   ],
   "devDependencies": {
     "purescript-mocha": "~0.0.2",
-    "purescript-chai": "*"
+    "purescript-chai": "*",
+    "purescript-quickcheck": "~0.3.0"
   }
 }

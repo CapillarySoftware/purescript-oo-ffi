@@ -1,5 +1,5 @@
 {
-  "name": "Presentable",
+  "name": "purescript-oo-ffi",
   "private": false,
   "scripts": {
     "test": "gulp test"
