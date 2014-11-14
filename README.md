@@ -1,5 +1,8 @@
 ## Purescript OO FFI
 [![Build Status](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi.svg?branch=master)](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi)
+[![Bower version](https://badge.fury.io/bo/purescript-oo-ffi.svg)](http://badge.fury.io/bo/purescript-oo-ffi)
+[![Code Climate](https://codeclimate.com/github/CapillarySoftware/purescript-oo-ffi/badges/gpa.svg)](https://codeclimate.com/github/CapillarySoftware/purescript-oo-ffi)
+[![Dependencies](https://david-dm.org/CapillarySoftware/purescript-oo-ffi.png)](https://david-dm.org/CapillarySoftware/purescript-oo-ffi)
 
 A collection of helper functions for binding into foreign OO style apis
 
