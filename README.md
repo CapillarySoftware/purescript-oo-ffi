@@ -58,7 +58,7 @@ method2 :: String -> objectWithMethod -> firstArgToMethod -> secondArgToMethod -
 
 The `String` in the first argument is name of the property you are binding to. 
 
-`method` bindings are in the following format `method<number of arguments>` for pure functions and `method<number of arguments>Eff` for **Eff**ectful functions.
+`method` bindings are in the following format `method<number of arguments>` for pure functions and `method<number of arguments>Eff` for Effectful functions.
 
 ---
 
@@ -69,7 +69,7 @@ var foo = { bar : 0 };
 ```
 
 ```purescript
-getBar :: forall e. Foo -> Eff { myMutable :: Mutable | e } Number
+getBar :: forall e. Foo -> Eff { myMutable :: MyMutable | e } Number
 getBar = getter "bar"
 
 modifyBar :: forall e. Foo -> (Number -> Number) -> Eff { myMutable :: MyMutable | e } Number
