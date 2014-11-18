@@ -36,7 +36,7 @@ foreign import inc """
       obj.inc();
     };
   }
-""" :: forall e. Obj -> Eff (mutation :: Mutation | e) Unit
+""" :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
 ```
 
 Object Oriented Foriegn Function Interface provides functions to 
@@ -46,25 +46,25 @@ handle boilerplate when binding onto JavaScript objects.
   add :: Obj -> Number -> Number -> Number
   add = method2 "add"
   
-  inc :: forall e. Obj -> Eff (mutation :: Mutation | e) Unit
+  inc :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
   inc = method0Eff "inc"
 ```
 
-Much neater. 
+Much neater. Here's how it works:
 
 ```purescript
-method2 :: String -> objectWithMethod -> firstArgToMethod -> secondArgToMethod -> returnType
+method2 :: String -> objectWithMethod -> firstArgToMethod -> secondArgToMethod -> returnValue
 ```
 
-The `String` in the first argument is property you are binding to. 
+The `String` in the first argument is name of the property you are binding to. 
 
-OO-FFI functions are in the following format `method<number of argumentes>` for pure functions and `method<number of arguments>Eff` for `Eff`ectful functions.
+`method` bindings are in the following format `method<number of arguments>` for pure functions and `method<number of arguments>Eff` for **Eff**ectful functions.
 
 ---
 
-Mutable properties
+Mutable properties are also assisted.
 
-```
+```javascript
 `var foo = { bar : 0 };
 ```
 
