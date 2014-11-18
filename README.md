@@ -1,5 +1,9 @@
 ## Purescript OO FFI
+[![Build Status](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi.svg?branch=master)](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi)
 
+A collection of helper functions for binding into foreign OO style apis
+
+---
 
 Lets say we want to bind into the following object, defined with foreign data type `Obj`.
 ```javascript
@@ -56,9 +60,33 @@ The `String` in the first argument is property you are binding to.
 
 OO-FFI functions are in the following format `method<number of argumentes>` for pure functions and `method<number of arguments>Eff` for `Eff`ectful functions.
 
-[![Build Status](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi.svg?branch=master)](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi)
+---
 
-A collection of helper functions for binding into foreign OO style apis
+Mutable properties
+
+```
+`var foo = { bar : 0 };
+```
+
+```purescript
+getBar :: forall e. Foo -> Eff { myMutable :: Mutable | e } Number
+getBar = getter "bar"
+
+modifyBar :: forall e. Foo -> (Number -> Number) -> Eff { myMutable :: MyMutable | e } Number
+modifyBar = modifier "bar"
+
+setBar :: forall e. Foo -> Number -> Eff { myMutable :: MyMutable | e } Number
+setBar = setter "bar"
+
+main = do
+  b  <- getBar foo
+  b' <- setBar foo 1
+  modifyBar foo \x -> x + 1
+  b'' <- getBar foo
+  assert $ b   == 0
+  assert $ b'  == 1
+  assert $ b'' == 2
+```
 
 
 
