@@ -65,7 +65,7 @@ The `String` in the first argument is name of the property you are binding to.
 Mutable properties are also assisted.
 
 ```javascript
-`var foo = { bar : 0 };
+var foo = { bar : 0 };
 ```
 
 ```purescript
