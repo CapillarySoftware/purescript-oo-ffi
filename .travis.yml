@@ -1,5 +1,5 @@
 language : haskell
-ghc : 7.6.3
+ghc : 7.8.3
 install : 
   - 'cabal install purescript'
   - 'npm install -g gulp bower karma karma-cli'
