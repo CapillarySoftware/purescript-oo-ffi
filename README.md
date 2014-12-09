@@ -6,6 +6,8 @@
 
 A collection of helper functions for binding into foreign OO style apis
 
+> [paf31's Post including an explaination of this lib.](https://gist.github.com/paf31/8e9177b20ee920480fbc#purescript-oo-ffi)
+
 ---
 
 Lets say we want to bind into the following object, defined with foreign data type `Obj`.
