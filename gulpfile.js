@@ -8,6 +8,7 @@ gulpFilter = require('gulp-filter'),
 express    = require('express'),
 runSq      = require('run-sequence'),
 karma      = require('gulp-karma'),
+mocha      = require('gulp-mocha')(),
 
 paths      = {
   src : {
@@ -77,6 +78,7 @@ gulp.task('test:unit', function(){
       noColors   : true,
       action     : "run"
     }));
+  gulp.src(paths.test.dest+"/"+options.test.output).pipe(mocha);
 });
 
 gulp.task('doc', function(){

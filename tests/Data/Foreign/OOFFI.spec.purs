@@ -12,12 +12,13 @@ foreign import data TestObj :: *
 foreign import data OOTest  :: !
 
 foreign import obj """
-  window.i0 = function(               ){ this.x = true;              };
-  window.i1 = function(             x ){ this.x = x;                 };
-  window.i2 = function(          x, y ){ this.x = x + y;             };
-  window.i3 = function(       x, y, z ){ this.x = x + y / z;         };
-  window.i4 = function(    w, x, y, z ){ this.x = w * x + y / z;     };
-  window.i5 = function( v, w, x, y, z ){ this.x = v * w + x / y - z; };
+  var c = PS.Context.getContext();
+  c.i0 = function(               ){ this.x = true;              };
+  c.i1 = function(             x ){ this.x = x;                 };
+  c.i2 = function(          x, y ){ this.x = x + y;             };
+  c.i3 = function(       x, y, z ){ this.x = x + y / z;         };
+  c.i4 = function(    w, x, y, z ){ this.x = w * x + y / z;     };
+  c.i5 = function( v, w, x, y, z ){ this.x = v * w + x / y - z; };
 
   var obj = {
     method0    : function(               ){ return true;              },
