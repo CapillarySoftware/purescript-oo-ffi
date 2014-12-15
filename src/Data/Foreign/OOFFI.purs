@@ -6,16 +6,16 @@ module Data.Foreign.OOFFI
   , method4, method4Eff
   , method5, method5Eff
   , getter, modifier, setter
-  , instantiate0
-  , instantiate1
-  , instantiate2
-  , instantiate3
-  , instantiate4
-  , instantiate5 ) where
+  , instantiate0, instantiate0From
+  , instantiate1, instantiate1From
+  , instantiate2, instantiate2From
+  , instantiate3, instantiate3From
+  , instantiate4, instantiate4From
+  , instantiate5, instantiate5From ) where
 
 import Data.Function
 import Control.Monad.Eff
-
+import Context
 
 
 foreign import method0Impl
@@ -162,54 +162,74 @@ setter = runFn3 setterImpl
 
 
 
-foreign import instantiate0 """
-  function instantiate0(string){
+foreign import instantiate0FromImpl """
+  function instantiate0FromImpl(string, o){
     return function(){
-      return new window[string]();
+      return new o[string]();
     };
-  }""" :: forall a e. String -> Eff e a
+  }""" :: forall a o e. Fn2 String o (Eff e a)
 
-foreign import instantiate1Impl """
-  function instantiate1Impl(string, x){
+instantiate0From = runFn2 instantiate0FromImpl
+
+instantiate0 :: forall a e. String -> Eff e a
+instantiate0 s = getContext >>= instantiate0From s 
+
+foreign import instantiate1FromImpl """
+  function instantiate1FromImpl(string, o, x){
     return function(){
-      return new window[string](x);
+      return new o[string](x);
     };
-  }""" :: forall a b e. Fn2 String a (Eff e b)
+  }""" :: forall a b o e. Fn3 String o a (Eff e b)
 
-instantiate1 = runFn2 instantiate1Impl
+instantiate1From = runFn3 instantiate1FromImpl
 
-foreign import instantiate2Impl """
-  function instantiate2Impl(string, x, y){
+instantiate1 :: forall a b e. String -> a -> Eff e b
+instantiate1 s a = getContext >>= \c -> instantiate1From s c a 
+
+foreign import instantiate2FromImpl """
+  function instantiate2FromImpl(string, o, x, y){
     return function(){
-      return new window[string](x, y);
+      return new o[string](x, y);
     };
-  }""" :: forall a b c e. Fn3 String a b (Eff e c)
+  }""" :: forall a b c o e. Fn4 String o a b (Eff e c)
 
-instantiate2 = runFn3 instantiate2Impl
+instantiate2From = runFn4 instantiate2FromImpl
 
-foreign import instantiate3Impl """
-  function instantiate3Impl(string, x, y, z){
+instantiate2 :: forall a b c e. String -> a -> b -> Eff e c
+instantiate2 s a b = getContext >>= \c -> instantiate2From s c a b
+
+foreign import instantiate3FromImpl """
+  function instantiate3FromImpl(string, o, x, y, z){
     return function(){
-      return new window[string](x, y, z);
+      return new o[string](x, y, z);
     };
-  }""" :: forall a b c d e. Fn4 String a b c (Eff e d)
+  }""" :: forall a b c d o e. Fn5 String o a b c (Eff e d)
 
-instantiate3 = runFn4 instantiate3Impl
+instantiate3From = runFn5 instantiate3FromImpl
 
-foreign import instantiate4Impl """
-  function instantiate4Impl(string, w, x, y, z){
+instantiate3 :: forall a b c d e. String -> a -> b -> c -> Eff e d
+instantiate3 s a b c = getContext >>= \c' -> instantiate3From s c' a b c 
+
+foreign import instantiate4FromImpl """
+  function instantiate4FromImpl(string, o, w, x, y, z){
     return function(){
-      return new window[string](w, x, y, z);
+      return new o[string](w, x, y, z);
     };
-  }""" :: forall a b c d e f. Fn5 String a b c d (Eff e f)
+  }""" :: forall a b c d e f o. Fn6 String o a b c d (Eff e f)
 
-instantiate4 = runFn5 instantiate4Impl
+instantiate4From = runFn6 instantiate4FromImpl
 
-foreign import instantiate5Impl """
-  function instantiate5Impl(string, v, w, x, y, z){
+instantiate4 :: forall a b c d e eff. String -> a -> b -> c -> d -> Eff eff e  
+instantiate4 s a b c d = getContext >>= \c' -> instantiate4From s c' a b c d
+
+foreign import instantiate5FromImpl """
+  function instantiate5FromImpl(string, o, v, w, x, y, z){
     return function(){
-      return new window[string](v, w, x, y, z);
+      return new o[string](v, w, x, y, z);
     };
-  }""" :: forall a b c d e f g. Fn6 String a b c d f (Eff e g)
+  }""" :: forall a b c d e f g o. Fn7 String o a b c d f (Eff e g)
 
-instantiate5 = runFn6 instantiate5Impl
+instantiate5From = runFn7 instantiate5FromImpl
+
+instantiate5 :: forall a b c d e f eff. String -> a -> b -> c -> d -> e -> Eff eff f
+instantiate5 s a b c d e = getContext >>= \c' -> instantiate5From s c' a b c d e

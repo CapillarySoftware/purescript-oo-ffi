@@ -17,5 +17,8 @@
     "purescript-mocha": "~0.0.2",
     "purescript-chai": "*",
     "purescript-quickcheck": "~0.3.0"
+  },
+  "dependencies": {
+    "purescript-context": "~0.0.3"
   }
 }
