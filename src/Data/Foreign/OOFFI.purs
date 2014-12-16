@@ -131,7 +131,7 @@ foreign import getterImpl
   \  return function(){\
   \    return o[propName];\
   \  };\
-  \}" :: forall o e. Fn2 String o e
+  \}" :: forall o a eff. Fn2 String o (Eff eff a)
 
 getter = runFn2 getterImpl
 
@@ -143,7 +143,7 @@ foreign import modifierImpl
   \    o[propName] = fn(o[propName]);\
   \    return o[propName];\
   \  };\
-  \}" :: forall o f e. Fn3 String o f e
+  \}" :: forall o a b eff. Fn3 String o (a -> b) (Eff eff b)
 
 modifier = runFn3 modifierImpl
 
@@ -155,7 +155,7 @@ foreign import setterImpl
   \    o[propName] = v;\
   \    return v;\
   \  };\
-  \}" :: forall o v e. Fn3 String o v e
+  \}" :: forall o v eff. Fn3 String o v (Eff eff v)
 
 setter = runFn3 setterImpl
 
