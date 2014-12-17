@@ -49,7 +49,7 @@ foreign import inc """
 """ :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
 ```
 
-Object Oriented Foriegn Function Interface provides functions to 
+Object Oriented Foriegn Function Interface provides functions to
 handle boilerplate when binding onto JavaScript objects.
 
 ```purescript
@@ -58,7 +58,7 @@ handle boilerplate when binding onto JavaScript objects.
 
   add :: Obj -> Number -> Number -> Number
   add = method2 "add"
-  
+
   inc :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
   inc = method0Eff "inc"
 ```
@@ -69,7 +69,7 @@ Much neater. Here's how it works:
 method2 :: String -> objectWithMethod -> firstArgToMethod -> secondArgToMethod -> returnValue
 ```
 
-The `String` in the first argument is name of the property you are binding to. 
+The `String` in the first argument is name of the property you are binding to.
 
 `method` bindings are in the following format `method<number of arguments>` for pure functions and `method<number of arguments>Eff` for Effectful functions.
 
@@ -148,3 +148,38 @@ newFoo = "Foo" `instantiate1From` lib
 ```
 
 The pattern here is `instantiate<number of arguments>From`.
+
+### Binding to Globals
+
+Lets say you wish to bind to something on the global context. For example:
+
+```javascript
+context.setTimeout(fn, milliseconds);
+```
+
+Helper methods are provided with patterns:
+```
+method<number of arguments>C
+method<number of arguments>EffC
+```
+
+so you can bind like so:
+
+```purescript
+timeout :: forall e a. Eff (timer :: Timer | e) a -> Milliseconds -> Eff (timer :: Timer | e) Timeout
+timeout = method2EffC "setTimeout"
+```
+
+where `C` indicates Global Context (`window` or `global` or `self`).
+
+This also works for getters and setters.
+
+```javascript
+context.foo = 3;
+```
+
+```purescript
+getFoo :: forall e. Eff e Number
+getFoo = getterC "foo"
+```
+
