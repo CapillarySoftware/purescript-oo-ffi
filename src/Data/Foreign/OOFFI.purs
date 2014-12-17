@@ -158,8 +158,8 @@ foreign import modifierImpl
   \  };\
   \}" :: forall o a b eff. Fn3 String o (a -> b) (Eff eff b)
 
-modifier    = runFn3 modifierImpl
-modifierC s = gc \c -> modifier s c
+modifier      = runFn3 modifierImpl
+modifierC s f = gc \c -> modifier s c f
 
 
 foreign import setterImpl
@@ -170,8 +170,8 @@ foreign import setterImpl
   \  };\
   \}" :: forall o v eff. Fn3 String o v (Eff eff v)
 
-setter = runFn3 setterImpl
-setterC s = gc \c -> setter s c
+setter      = runFn3 setterImpl
+setterC s v = gc \c -> setter s c v
 
 
 
