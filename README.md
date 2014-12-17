@@ -1,14 +1,15 @@
 ## Purescript OO FFI
 [![Build Status](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi.svg?branch=master)](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi)
 [![Bower version](https://badge.fury.io/bo/purescript-oo-ffi.svg)](http://badge.fury.io/bo/purescript-oo-ffi)
-[![Code Climate](https://codeclimate.com/github/CapillarySoftware/purescript-oo-ffi/badges/gpa.svg)](https://codeclimate.com/github/CapillarySoftware/purescript-oo-ffi)
-[![Dependencies](https://david-dm.org/CapillarySoftware/purescript-oo-ffi.png)](https://david-dm.org/CapillarySoftware/purescript-oo-ffi)
+[![Dependency Status](https://www.versioneye.com/user/projects/5491b268dd709d2cfc0001b1/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5491b268dd709d2cfc0001b1)
 
 A collection of helper functions for binding into foreign OO style apis
 
 > [paf31's Post including an explaination of this lib.](https://gist.github.com/paf31/8e9177b20ee920480fbc#purescript-oo-ffi)
 
 ---
+
+### Methods
 
 Lets say we want to bind into the following object, defined with foreign data type `Obj`.
 ```javascript
@@ -24,7 +25,11 @@ var obj = {
 ```
 
 FFI alone is quite a bit of boilerplate
+
 ```purescript
+foreign import data Obj :: *
+foreign import data MyMutable :: !
+
 foreign import add """
   function add(obj){
     return function(x){
@@ -48,6 +53,9 @@ Object Oriented Foriegn Function Interface provides functions to
 handle boilerplate when binding onto JavaScript objects.
 
 ```purescript
+  foreign import data Obj :: *
+  foreign import data MyMutable :: !
+
   add :: Obj -> Number -> Number -> Number
   add = method2 "add"
   
@@ -65,7 +73,7 @@ The `String` in the first argument is name of the property you are binding to.
 
 `method` bindings are in the following format `method<number of arguments>` for pure functions and `method<number of arguments>Eff` for Effectful functions.
 
----
+### Get Set and Modify
 
 Mutable properties are also assisted.
 
@@ -74,6 +82,9 @@ var foo = { bar : 0 };
 ```
 
 ```purescript
+foreign import data Foo :: *
+foreign import data MyMutable :: !
+
 getBar :: forall e. Foo -> Eff { myMutable :: MyMutable | e } Number
 getBar = getter "bar"
 
@@ -93,6 +104,47 @@ main = do
   assert $ b'' == 2
 ```
 
+### Instantiate
 
+Shortcuts for the Instantiation of Object Oriented Classes is supported on two layers.
 
+```javascript
+function Foo(x){
+  this.x = x;
+}
+```
 
+```purescript
+foreign import data Foo :: *
+foreign import data NewFoo :: !
+
+newFoo :: forall a e. a -> Eff (foo :: NewFoo | e) Foo
+newFoo = instantiate1 "Foo"
+```
+
+This will pull `Foo` off the the global context (`window` or `global` or `self`) like so `new window["Foo"]`. The pattern here is `instantiate<number of arguments>`
+
+If the library you are binding to holds its Object Oriented Classes inside a NameSpace like this:
+
+```javascript
+var Lib = {
+  Foo : function(x){ this.x; }
+};
+
+foo = new Lib.Foo(0);
+```
+
+Then use the `instantiateNFrom` functions
+
+```purescript
+foreign import data Foo :: *
+forieng import data Lib :: *
+foreign import data NewFoo :: !
+
+foreign import lib "var lib = Lib" :: Lib
+
+newFoo :: forall a e. a -> Eff (foo :: NewFoo | e) Foo
+newFoo = "Foo" `instantiate1From` lib
+```
+
+The pattern here is `instantiate<number of arguments>From`.
