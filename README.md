@@ -138,7 +138,7 @@ Then use the `instantiateNFrom` functions
 
 ```purescript
 foreign import data Foo :: *
-forieng import data Lib :: *
+foreign import data Lib :: *
 foreign import data NewFoo :: !
 
 foreign import lib "var lib = Lib" :: Lib
