@@ -107,8 +107,6 @@ main = (getContext >>= assignContext) *> run [consoleReporter] do
       it "instantiate1" do
         r <- lift' random :: Affit Number
         x <- lift' (instantiate1 "i1" r)
-        lift' $ log "Hello!"
-        lift' $ log $ "val: " <> show x.x
         x.x `shouldEqual` r
       it "instantiate2" do
         r  <- lift' random :: Affit Number
