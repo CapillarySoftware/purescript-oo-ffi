@@ -24,5 +24,8 @@
     "purescript-eff": "~0.1.0",
     "purescript-control": "~0.3.0",
     "purescript-functions": "~0.1.0"
+  },
+  "resolutions": {
+    "purescript-spec": "~0.7.1"
   }
 }
