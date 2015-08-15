@@ -24,43 +24,48 @@ var obj = {
 };
 ```
 
-FFI alone is quite a bit of boilerplate
+FFI alone is quite a bit of boilerplate:
 
+`MyModule.js`:
+```javascript
+exports.add = function (obj) {
+  return function(x) {
+    return function(y) {
+      return obj.add(x, y);
+    };
+  };
+}
+
+exports.inc = function (obj) {
+  return function() {
+    obj.inc();
+  };
+}
+```
+
+`MyModule.purs`:
 ```purescript
 foreign import data Obj :: *
 foreign import data MyMutable :: !
 
-foreign import add """
-  function add(obj){
-    return function(x){
-      return function(y){
-        return obj.add(x, y);
-      };
-    };
-  }
-""" :: Obj -> Number -> Number -> Number
+foreign import add :: Obj -> Number -> Number -> Number
 
-foreign import inc """
-  function inc(obj){
-    return function(){
-      obj.inc();
-    };
-  }
-""" :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
+foreign import inc :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
 ```
 
 Object Oriented Foriegn Function Interface provides functions to
 handle boilerplate when binding onto JavaScript objects.
 
+`MyModule.purs`:
 ```purescript
-  foreign import data Obj :: *
-  foreign import data MyMutable :: !
+foreign import data Obj :: *
+foreign import data MyMutable :: !
 
-  add :: Obj -> Number -> Number -> Number
-  add = method2 "add"
+add :: Obj -> Number -> Number -> Number
+add = method2 "add"
 
-  inc :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
-  inc = method0Eff "inc"
+inc :: forall e. Obj -> Eff (myMutable :: MyMutable | e) Unit
+inc = method0Eff "inc"
 ```
 
 Much neater. Here's how it works:
@@ -182,4 +187,3 @@ context.foo = 3;
 getFoo :: forall e. Eff e Number
 getFoo = getterC "foo"
 ```
-
