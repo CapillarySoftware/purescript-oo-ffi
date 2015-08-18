@@ -28,5 +28,8 @@
     "purescript-random": "^0.2.2",
     "purescript-spec": "^0.7.1",
     "purescript-spec-quickcheck": "^0.3.0"
+  },
+  "resolutions": {
+    "purescript-spec": "^0.7.1"
   }
 }
