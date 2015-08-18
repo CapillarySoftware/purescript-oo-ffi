@@ -1,6 +1,6 @@
 {
   "name": "purescript-oo-ffi",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "homepage": "https://github.com/CapillarySoftware/purescript-oo-ffi",
   "authors": [
     "Isaac Shapira <fresheyeball@gmail.com>"
