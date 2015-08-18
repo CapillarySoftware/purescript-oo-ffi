@@ -6,6 +6,10 @@
     "Isaac Shapira <fresheyeball@gmail.com>"
   ],
   "description": "FFI Helpers for binding to OO",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CapillarySoftware/purescript-oo-ffi.git"
+  },
   "license": "MIT",
   "ignore": [
     "**/.*",
