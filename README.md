@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi.svg?branch=master)](https://travis-ci.org/CapillarySoftware/purescript-oo-ffi)
 [![Bower version](https://badge.fury.io/bo/purescript-oo-ffi.svg)](http://badge.fury.io/bo/purescript-oo-ffi)
 [![Dependency Status](https://www.versioneye.com/user/projects/5491b268dd709d2cfc0001b1/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5491b268dd709d2cfc0001b1)
+[![purescript-oo-ffi on Pursuit](http://pursuit.purescript.org/packages/purescript-oo-ffi/badge)](http://pursuit.purescript.org/packages/purescript-oo-ffi)
 
 PureScript Object Oriented Foreign Function Interface is a collection of helper functions for binding into foreign OO style apis
 
